@@ -6,43 +6,30 @@ public class Vector2 {
     private float[][] vector;
 
     public Vector2(float[][] initialMatrix) {
+        MathUtil.checkArray(initialMatrix, n, m);
         this.vector = initialMatrix;
     }
 
     public Vector2 multiply(float num) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                this.vector[i][j] = this.vector[i][j] * num;
-            }
-        }
+        MathUtil.multiplyByNum(this.vector, num);
         return this;
     }
 
     public Vector2 divide(float num) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                this.vector[i][j] = this.vector[i][j] / num;
-            }
-        }
+        MathUtil.checkArray(this.vector, n, m);
+        MathUtil.divideByNum(this.vector, num);
         return this;
     }
 
-
     public Vector2 add(Vector2 vec) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                this.vector[i][j] += vec.vector[i][j];
-            }
-        }
+        MathUtil.checkArray(this.vector, n, m);
+        MathUtil.addArrays(this.vector, vec.getVector());
         return this;
     }
 
     public Vector2 subtract(Vector2 vec) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                this.vector[i][j] -= vec.vector[i][j];
-            }
-        }
+        MathUtil.checkArray(vec.getVector(), n, m);
+        MathUtil.substractArrays(this.vector, vec.getVector());
         return this;
     }
 
@@ -59,11 +46,11 @@ public class Vector2 {
 
 
     public float scalarProduct(Vector2 vec) {
-        float res = 0;
-        for (int i = 0; i < vec.vector.length; i++) {
-            res += (this.vector[i][0] * vec.vector[i][0]);
-        }
-        return res;
+        MathUtil.checkArray(vec.getVector(), n, m);
+        return MathUtil.scalarArrayProduct(this.vector, vec.getVector());
     }
 
+    public float[][] getVector() {
+        return vector;
+    }
 }

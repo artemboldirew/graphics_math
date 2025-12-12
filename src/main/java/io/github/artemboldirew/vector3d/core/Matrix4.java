@@ -6,11 +6,13 @@ public class Matrix4 {
     private float[][] matrix;
 
     public Matrix4(float[][] initialMatrix) {
+        MathUtil.checkArray(initialMatrix, n, m);
         this.matrix = initialMatrix;
     }
 
-    public Matrix4 multiply(Matrix4 m) {
-        this.matrix = MathUtil.multiplyMatrices(this.matrix, m.matrix);
+    public Matrix4 multiply(Matrix4 mat) {
+        MathUtil.checkArray(mat.getMatrix(), n, m);
+        this.matrix = MathUtil.multiplyMatrices(this.matrix, mat.matrix);
         return this;
     }
 
@@ -19,26 +21,20 @@ public class Matrix4 {
         return this;
     }
 
-    public Matrix4 multiply(Vector4 m) {
-        this.matrix = MathUtil.multiplyMatrices(this.matrix, m.getVector());
+    public Vector4 multiply(Vector4 m) {
+        MathUtil.checkArray(m.getVector(), 4, 1);
+        return new Vector4(MathUtil.multiplyMatrices(this.matrix, m.getVector()));
+    }
+
+    public Matrix4 add(Matrix4 mat) {
+        MathUtil.checkArray(mat.getMatrix(), n, m);
+        MathUtil.addArrays(this.matrix, mat.getMatrix());
         return this;
     }
 
-    public Matrix4 add(Matrix4 matrix) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                this.matrix[i][j] = this.matrix[i][j] + matrix.matrix[i][j];
-            }
-        }
-        return this;
-    }
-
-    public Matrix4 subtract(Matrix4 matrix) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                this.matrix[i][j] = this.matrix[i][j] - matrix.matrix[i][j];
-            }
-        }
+    public Matrix4 subtract(Matrix4 mat) {
+        MathUtil.checkArray(mat.getMatrix(), n, m);
+        MathUtil.substractArrays(this.matrix, mat.getMatrix());
         return this;
     }
 
@@ -47,7 +43,12 @@ public class Matrix4 {
     }
 
     public static Matrix4 getZ() {
-        return new Matrix4(new float[][]{{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0}});
+        return new Matrix4(new float[][]{
+                {0.0f, 0.0f, 0.0f, 0.0f},
+                {0.0f, 0.0f, 0.0f, 0.0f},
+                {0.0f, 0.0f, 0.0f, 0.0f},
+                {0.0f, 0.0f, 0.0f, 0.0f}
+        });
     }
 
     public float[][] getMatrix() {

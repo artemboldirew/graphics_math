@@ -83,4 +83,54 @@ public class MathUtil {
 
         return transposed;
     }
+
+    public static float[][] addArrays(float[][] arr1, float[][] arr2) {
+        for (int i = 0; i < arr1.length; i++) {
+            for (int j = 0; j < arr1[0].length; j++) {
+                arr1[i][j] = arr1[i][j] + arr2[i][j];
+            }
+        }
+        return arr1;
+    }
+
+    public static float[][] substractArrays(float[][] arr1, float[][] arr2) {
+        for (int i = 0; i < arr1.length; i++) {
+            for (int j = 0; j < arr1[0].length; j++) {
+                arr1[i][j] = arr1[i][j] - arr2[i][j];
+            }
+        }
+        return arr1;
+    }
+
+    public static float[][] multiplyByNum(float[][] arr, float num) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                arr[i][j] = arr[i][j] * num;
+            }
+        }
+        return arr;
+    }
+
+    public static float[][] divideByNum(float[][] arr, float num) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                arr[i][j] = arr[i][j] / num;
+            }
+        }
+        return arr;
+    }
+
+    public static float scalarArrayProduct(float[][] arr1, float[][] arr2) {
+        float res = 0;
+        for (int i = 0; i < arr1.length; i++) {
+            res += (arr1[i][0] * arr2[i][0]);
+        }
+        return res;
+    }
+
+    public static void checkArray(float[][] matrix, int rows, int cols) {
+        if (matrix.length != rows || matrix[0].length != cols) {
+            throw new IllegalArgumentException("Incorrect matrix");
+        }
+    }
 }

@@ -1,16 +1,18 @@
 package io.github.artemboldirew.vector3d.core;
 
 public class Matrix3 {
-    private static final int n = 4;
-    private static final int m = 4;
+    private static final int n = 3;
+    private static final int m = 3;
     private float[][] matrix;
 
     public Matrix3(float[][] initialMatrix) {
+        MathUtil.checkArray(initialMatrix, n, m);
         this.matrix = initialMatrix;
     }
 
-    public Matrix3 multiply(Matrix3 m) {
-        this.matrix = MathUtil.multiplyMatrices(this.matrix, m.matrix);
+    public Matrix3 multiply(Matrix3 mat) {
+        MathUtil.checkArray(mat.getMatrix(), n, m);
+        this.matrix = MathUtil.multiplyMatrices(this.matrix, mat.matrix);
         return this;
     }
 
@@ -19,34 +21,37 @@ public class Matrix3 {
         return this;
     }
 
-    public Matrix3 multiply(Vector3 m) {
-        this.matrix = MathUtil.multiplyMatrices(this.matrix, m.getVector());
+    public Matrix3 multiply(Vector3 vec) {
+        MathUtil.checkArray(vec.getVector(), 3, 1);
+        this.matrix = MathUtil.multiplyMatrices(this.matrix, vec.getVector());
         return this;
     }
 
-    public Matrix3 add(Matrix3 matrix) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                this.matrix[i][j] = this.matrix[i][j] + matrix.matrix[i][j];
-            }
-        }
+    public Matrix3 add(Matrix3 mat) {
+        MathUtil.checkArray(mat.getMatrix(), n, m);
+        MathUtil.addArrays(this.matrix, mat.getMatrix());
         return this;
     }
 
-    public Matrix3 subtract(Matrix3 matrix) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                this.matrix[i][j] = this.matrix[i][j] - matrix.matrix[i][j];
-            }
-        }
+    public Matrix3 subtract(Matrix3 mat) {
+        MathUtil.checkArray(mat.getMatrix(), n, m);
+        MathUtil.substractArrays(this.matrix, mat.getMatrix());
         return this;
     }
 
     public static Matrix3 getE() {
-        return new Matrix3(new float[][]{{1.0F, 1.0F, 1.0F}, {1.0F, 1.0F, 1.0F}, {1.0F, 1.0F, 1.0F},{1.0F, 1.0F, 1.0F}});
+        return new Matrix3(new float[][]{{1.0F, 1.0F, 1.0F}, {1.0F, 1.0F, 1.0F}, {1.0F, 1.0F, 1.0F}});
     }
 
     public static Matrix3 getZ() {
-        return new Matrix3(new float[][]{{0, 0, 0},{0, 0, 0},{0, 0, 0},{0, 0, 0}});
+        return new Matrix3(new float[][]{
+                {0.0f, 0.0f, 0.0f},
+                {0.0f, 0.0f, 0.0f},
+                {0.0f, 0.0f, 0.0f}
+        });
+    }
+
+    public float[][] getMatrix() {
+        return matrix;
     }
 }
