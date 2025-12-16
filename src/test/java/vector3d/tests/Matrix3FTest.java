@@ -1,31 +1,31 @@
 package vector3d.tests;
 
-import io.github.artemboldirew.vector3d.core.Matrix3;
-import io.github.artemboldirew.vector3d.core.Vector3;
+import io.github.artemboldirew.vector3d.core.Matrix3f;
+import io.github.artemboldirew.vector3d.core.Vector3f;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
-class Matrix3Test {
-    private Matrix3 matrix1;
-    private Matrix3 matrix2;
-    private Matrix3 identityMatrix;
+class Matrix3FTest {
+    private Matrix3f matrix1;
+    private Matrix3f matrix2;
+    private Matrix3f identityMatrix;
 
     @BeforeEach
     void setUp() {
-        matrix1 = new Matrix3(new float[][]{
+        matrix1 = new Matrix3f(new float[][]{
                 {1.0f, 2.0f, 3.0f},
                 {4.0f, 5.0f, 6.0f},
                 {7.0f, 8.0f, 9.0f}
         });
 
-        matrix2 = new Matrix3(new float[][]{
+        matrix2 = new Matrix3f(new float[][]{
                 {2.0f, 0.0f, 1.0f},
                 {0.0f, 1.0f, 0.0f},
                 {1.0f, 0.0f, 2.0f}
         });
 
-        identityMatrix = new Matrix3(new float[][]{
+        identityMatrix = new Matrix3f(new float[][]{
                 {1.0f, 0.0f, 0.0f},
                 {0.0f, 1.0f, 0.0f},
                 {0.0f, 0.0f, 1.0f}
@@ -60,7 +60,7 @@ class Matrix3Test {
                 {4.0f, 5.0f, 6.0f}
         };
 
-        assertThrows(IllegalArgumentException.class, () -> new Matrix3(invalidMatrix));
+        assertThrows(IllegalArgumentException.class, () -> new Matrix3f(invalidMatrix));
     }
 
     @Test
@@ -71,27 +71,27 @@ class Matrix3Test {
                 {5.0f, 6.0f}
         };
 
-        assertThrows(IllegalArgumentException.class, () -> new Matrix3(invalidMatrix));
+        assertThrows(IllegalArgumentException.class, () -> new Matrix3f(invalidMatrix));
     }
 
     // Тесты multiply(Matrix3)
     @Test
     void testMulMatrixWithIdentity() {
         float[][] original = deepCopy(matrix1.getMatrix());
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).mul(identityMatrix);
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).mul(identityMatrix);
         assertArrayEquals(original, result.getMatrix());
     }
 
     @Test
     void testMulIdentityWithMatrix() {
         float[][] original = deepCopy(matrix1.getMatrix());
-        Matrix3 result = new Matrix3(deepCopy(identityMatrix.getMatrix())).mul(matrix1);
+        Matrix3f result = new Matrix3f(deepCopy(identityMatrix.getMatrix())).mul(matrix1);
         assertArrayEquals(original, result.getMatrix());
     }
 
     @Test
     void testMulTwoMatrices() {
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).mul(matrix2);
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).mul(matrix2);
         float[][] expected = {
                 {5.0f, 2.0f, 7.0f},
                 {14.0f, 5.0f, 16.0f},
@@ -102,8 +102,8 @@ class Matrix3Test {
 
     @Test
     void testMulCommutativeProperty() {
-        Matrix3 result1 = new Matrix3(deepCopy(matrix1.getMatrix())).mul(matrix2);
-        Matrix3 result2 = new Matrix3(deepCopy(matrix2.getMatrix())).mul(matrix1);
+        Matrix3f result1 = new Matrix3f(deepCopy(matrix1.getMatrix())).mul(matrix2);
+        Matrix3f result2 = new Matrix3f(deepCopy(matrix2.getMatrix())).mul(matrix1);
 
         // Умножение матриц некоммутативно
         assertFalse(arraysEqual(result1.getMatrix(), result2.getMatrix()));
@@ -111,8 +111,8 @@ class Matrix3Test {
 
     @Test
     void testMulWithZeroMatrix() {
-        Matrix3 zeroMatrix = Matrix3.getZ();
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).mul(zeroMatrix);
+        Matrix3f zeroMatrix = Matrix3f.getZ();
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).mul(zeroMatrix);
         float[][] expected = {
                 {0.0f, 0.0f, 0.0f},
                 {0.0f, 0.0f, 0.0f},
@@ -123,7 +123,7 @@ class Matrix3Test {
 
     @Test
     void testMulSameMatrixTwice() {
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).mul(new Matrix3(deepCopy(matrix1.getMatrix())));
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).mul(new Matrix3f(deepCopy(matrix1.getMatrix())));
         float[][] expected = {
                 {30.0f, 36.0f, 42.0f},
                 {66.0f, 81.0f, 96.0f},
@@ -135,7 +135,7 @@ class Matrix3Test {
     // Тесты transpose()
     @Test
     void testTranspose() {
-        Matrix3 transposed = new Matrix3(deepCopy(matrix1.getMatrix())).transpose();
+        Matrix3f transposed = new Matrix3f(deepCopy(matrix1.getMatrix())).transpose();
         float[][] expected = {
                 {1.0f, 4.0f, 7.0f},
                 {2.0f, 5.0f, 8.0f},
@@ -147,21 +147,21 @@ class Matrix3Test {
     @Test
     void testTransposeOfTransposeIsOriginal() {
         float[][] original = deepCopy(matrix1.getMatrix());
-        Matrix3 transposedTwice = new Matrix3(deepCopy(matrix1.getMatrix())).transpose().transpose();
+        Matrix3f transposedTwice = new Matrix3f(deepCopy(matrix1.getMatrix())).transpose().transpose();
         assertArrayEquals(original, transposedTwice.getMatrix());
     }
 
     @Test
     void testTransposeIdentityMatrix() {
         float[][] original = deepCopy(identityMatrix.getMatrix());
-        Matrix3 transposedIdentity = new Matrix3(deepCopy(identityMatrix.getMatrix())).transpose();
+        Matrix3f transposedIdentity = new Matrix3f(deepCopy(identityMatrix.getMatrix())).transpose();
         assertArrayEquals(original, transposedIdentity.getMatrix());
     }
 
     @Test
     void testTransposeZeroMatrix() {
-        Matrix3 zeroMatrix = Matrix3.getZ();
-        Matrix3 transposedZero = new Matrix3(deepCopy(zeroMatrix.getMatrix())).transpose();
+        Matrix3f zeroMatrix = Matrix3f.getZ();
+        Matrix3f transposedZero = new Matrix3f(deepCopy(zeroMatrix.getMatrix())).transpose();
         float[][] expected = {
                 {0.0f, 0.0f, 0.0f},
                 {0.0f, 0.0f, 0.0f},
@@ -172,20 +172,20 @@ class Matrix3Test {
 
     @Test
     void testTransposeSymmetricMatrix() {
-        Matrix3 symmetricMatrix = new Matrix3(new float[][]{
+        Matrix3f symmetricMatrix = new Matrix3f(new float[][]{
                 {1.0f, 2.0f, 3.0f},
                 {2.0f, 4.0f, 5.0f},
                 {3.0f, 5.0f, 6.0f}
         });
-        Matrix3 transposed = new Matrix3(deepCopy(symmetricMatrix.getMatrix())).transpose();
+        Matrix3f transposed = new Matrix3f(deepCopy(symmetricMatrix.getMatrix())).transpose();
         assertArrayEquals(symmetricMatrix.getMatrix(), transposed.getMatrix());
     }
 
     // Тесты multiply(Vector3)
     @Test
     void testMulWithVector() {
-        Vector3 vector = new Vector3(new float[][]{{1.0f}, {2.0f}, {3.0f}});
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).mul(vector);
+        Vector3f vector = new Vector3f(new float[][]{{1.0f}, {2.0f}, {3.0f}});
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).mul(vector);
         float[][] expected = {
                 {14.0f},
                 {32.0f},
@@ -196,41 +196,41 @@ class Matrix3Test {
 
     @Test
     void testMulWithZeroVector() {
-        Vector3 zeroVector = new Vector3(new float[][]{{0.0f}, {0.0f}, {0.0f}});
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).mul(zeroVector);
+        Vector3f zeroVector = new Vector3f(new float[][]{{0.0f}, {0.0f}, {0.0f}});
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).mul(zeroVector);
         float[][] expected = {{0.0f}, {0.0f}, {0.0f}};
         assertArrayEquals(expected, result.getMatrix());
     }
 
     @Test
     void testMulVectorWithIdentityMatrix() {
-        Vector3 vector = new Vector3(new float[][]{{1.0f}, {2.0f}, {3.0f}});
-        Matrix3 result = new Matrix3(deepCopy(identityMatrix.getMatrix())).mul(vector);
+        Vector3f vector = new Vector3f(new float[][]{{1.0f}, {2.0f}, {3.0f}});
+        Matrix3f result = new Matrix3f(deepCopy(identityMatrix.getMatrix())).mul(vector);
         float[][] expected = {{1.0f}, {2.0f}, {3.0f}};
         assertArrayEquals(expected, result.getMatrix());
     }
 
     @Test
     void testMulVectorWithZeroMatrix() {
-        Vector3 vector = new Vector3(new float[][]{{1.0f}, {2.0f}, {3.0f}});
-        Matrix3 zeroMatrix = Matrix3.getZ();
-        Matrix3 result = new Matrix3(deepCopy(zeroMatrix.getMatrix())).mul(vector);
+        Vector3f vector = new Vector3f(new float[][]{{1.0f}, {2.0f}, {3.0f}});
+        Matrix3f zeroMatrix = Matrix3f.getZ();
+        Matrix3f result = new Matrix3f(deepCopy(zeroMatrix.getMatrix())).mul(vector);
         float[][] expected = {{0.0f}, {0.0f}, {0.0f}};
         assertArrayEquals(expected, result.getMatrix());
     }
 
     @Test
     void testMulVectorUnitBasis() {
-        Vector3 xVector = new Vector3(new float[][]{{1.0f}, {0.0f}, {0.0f}});
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).mul(xVector);
+        Vector3f xVector = new Vector3f(new float[][]{{1.0f}, {0.0f}, {0.0f}});
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).mul(xVector);
         float[][] expected = {{1.0f}, {4.0f}, {7.0f}};
         assertArrayEquals(expected, result.getMatrix());
     }
 
     @Test
     void testMulVectorDifferentMatrix() {
-        Vector3 vector = new Vector3(new float[][]{{1.0f}, {2.0f}, {3.0f}});
-        Matrix3 result = new Matrix3(deepCopy(matrix2.getMatrix())).mul(vector);
+        Vector3f vector = new Vector3f(new float[][]{{1.0f}, {2.0f}, {3.0f}});
+        Matrix3f result = new Matrix3f(deepCopy(matrix2.getMatrix())).mul(vector);
         float[][] expected = {{5.0f}, {2.0f}, {7.0f}};
         assertArrayEquals(expected, result.getMatrix());
     }
@@ -238,7 +238,7 @@ class Matrix3Test {
     // Тесты add(Matrix3)
     @Test
     void testAddInPlace() {
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).addInPlace(matrix2);
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).addInPlace(matrix2);
         float[][] expected = {
                 {3.0f, 2.0f, 4.0f},
                 {4.0f, 6.0f, 6.0f},
@@ -252,21 +252,21 @@ class Matrix3Test {
         float[][] m1Copy = deepCopy(matrix1.getMatrix());
         float[][] m2Copy = deepCopy(matrix2.getMatrix());
 
-        Matrix3 result1 = new Matrix3(m1Copy).addInPlace(matrix2);
-        Matrix3 result2 = new Matrix3(m2Copy).addInPlace(matrix1);
+        Matrix3f result1 = new Matrix3f(m1Copy).addInPlace(matrix2);
+        Matrix3f result2 = new Matrix3f(m2Copy).addInPlace(matrix1);
         assertArrayEquals(result1.getMatrix(), result2.getMatrix());
     }
 
     @Test
     void testAddInPlaceZeroMatrix() {
-        Matrix3 zeroMatrix = Matrix3.getZ();
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).addInPlace(zeroMatrix);
+        Matrix3f zeroMatrix = Matrix3f.getZ();
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).addInPlace(zeroMatrix);
         assertArrayEquals(matrix1.getMatrix(), result.getMatrix());
     }
 
     @Test
     void testAddInPlaceIdentityMatrix() {
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).addInPlace(identityMatrix);
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).addInPlace(identityMatrix);
         float[][] expected = {
                 {2.0f, 2.0f, 3.0f},
                 {4.0f, 6.0f, 6.0f},
@@ -277,7 +277,7 @@ class Matrix3Test {
 
     @Test
     void testAddInPlaceSameMatrix() {
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).addInPlace(new Matrix3(deepCopy(matrix1.getMatrix())));
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).addInPlace(new Matrix3f(deepCopy(matrix1.getMatrix())));
         float[][] expected = {
                 {2.0f, 4.0f, 6.0f},
                 {8.0f, 10.0f, 12.0f},
@@ -288,12 +288,12 @@ class Matrix3Test {
 
     @Test
     void testAddInPlaceNegativeMatrix() {
-        Matrix3 negativeMatrix = new Matrix3(new float[][]{
+        Matrix3f negativeMatrix = new Matrix3f(new float[][]{
                 {-1.0f, -2.0f, -3.0f},
                 {-4.0f, -5.0f, -6.0f},
                 {-7.0f, -8.0f, -9.0f}
         });
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).addInPlace(negativeMatrix);
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).addInPlace(negativeMatrix);
         float[][] expected = {
                 {0.0f, 0.0f, 0.0f},
                 {0.0f, 0.0f, 0.0f},
@@ -305,7 +305,7 @@ class Matrix3Test {
     // Тесты subtract(Matrix3)
     @Test
     void testSubtract() {
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).subtract(matrix2);
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).subtract(matrix2);
         float[][] expected = {
                 {-1.0f, 2.0f, 2.0f},
                 {4.0f, 4.0f, 6.0f},
@@ -316,7 +316,7 @@ class Matrix3Test {
 
     @Test
     void testSubtractSelf() {
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).subtract(new Matrix3(deepCopy(matrix1.getMatrix())));
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).subtract(new Matrix3f(deepCopy(matrix1.getMatrix())));
         float[][] expected = {
                 {0.0f, 0.0f, 0.0f},
                 {0.0f, 0.0f, 0.0f},
@@ -327,14 +327,14 @@ class Matrix3Test {
 
     @Test
     void testSubtractZeroMatrix() {
-        Matrix3 zeroMatrix = Matrix3.getZ();
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).subtract(zeroMatrix);
+        Matrix3f zeroMatrix = Matrix3f.getZ();
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).subtract(zeroMatrix);
         assertArrayEquals(matrix1.getMatrix(), result.getMatrix());
     }
 
     @Test
     void testSubtractIdentityMatrix() {
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix())).subtract(identityMatrix);
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix())).subtract(identityMatrix);
         float[][] expected = {
                 {0.0f, 2.0f, 3.0f},
                 {4.0f, 4.0f, 6.0f},
@@ -345,20 +345,20 @@ class Matrix3Test {
 
     @Test
     void testSubtractSameAsAddInPlaceNegative() {
-        Matrix3 negativeMatrix = new Matrix3(new float[][]{
+        Matrix3f negativeMatrix = new Matrix3f(new float[][]{
                 {-2.0f, 0.0f, -1.0f},
                 {0.0f, -1.0f, 0.0f},
                 {-1.0f, 0.0f, -2.0f}
         });
-        Matrix3 result1 = new Matrix3(deepCopy(matrix1.getMatrix())).subtract(matrix2);
-        Matrix3 result2 = new Matrix3(deepCopy(matrix1.getMatrix())).addInPlace(negativeMatrix);
+        Matrix3f result1 = new Matrix3f(deepCopy(matrix1.getMatrix())).subtract(matrix2);
+        Matrix3f result2 = new Matrix3f(deepCopy(matrix1.getMatrix())).addInPlace(negativeMatrix);
         assertArrayEquals(result1.getMatrix(), result2.getMatrix());
     }
 
     @Test
     void testSubtractFromZeroMatrix() {
-        Matrix3 zeroMatrix = Matrix3.getZ();
-        Matrix3 result = new Matrix3(deepCopy(zeroMatrix.getMatrix())).subtract(matrix1);
+        Matrix3f zeroMatrix = Matrix3f.getZ();
+        Matrix3f result = new Matrix3f(deepCopy(zeroMatrix.getMatrix())).subtract(matrix1);
         float[][] expected = {
                 {-1.0f, -2.0f, -3.0f},
                 {-4.0f, -5.0f, -6.0f},
@@ -370,7 +370,7 @@ class Matrix3Test {
     // Тесты getE() и getZ()
     @Test
     void testGetE() {
-        Matrix3 eMatrix = Matrix3.getE();
+        Matrix3f eMatrix = Matrix3f.getE();
         float[][] expected = {
                 {1.0f, 1.0f, 1.0f},
                 {1.0f, 1.0f, 1.0f},
@@ -381,7 +381,7 @@ class Matrix3Test {
 
     @Test
     void testGetZ() {
-        Matrix3 zMatrix = Matrix3.getZ();
+        Matrix3f zMatrix = Matrix3f.getZ();
         float[][] expected = {
                 {0.0f, 0.0f, 0.0f},
                 {0.0f, 0.0f, 0.0f},
@@ -392,16 +392,16 @@ class Matrix3Test {
 
     @Test
     void testGetEAddInPlaceGetZ() {
-        Matrix3 eMatrix = Matrix3.getE();
-        Matrix3 zMatrix = Matrix3.getZ();
-        Matrix3 result = new Matrix3(deepCopy(eMatrix.getMatrix())).addInPlace(zMatrix);
+        Matrix3f eMatrix = Matrix3f.getE();
+        Matrix3f zMatrix = Matrix3f.getZ();
+        Matrix3f result = new Matrix3f(deepCopy(eMatrix.getMatrix())).addInPlace(zMatrix);
         assertArrayEquals(eMatrix.getMatrix(), result.getMatrix());
     }
 
     @Test
     void testGetESubtractGetE() {
-        Matrix3 eMatrix = Matrix3.getE();
-        Matrix3 result = new Matrix3(deepCopy(eMatrix.getMatrix())).subtract(eMatrix);
+        Matrix3f eMatrix = Matrix3f.getE();
+        Matrix3f result = new Matrix3f(deepCopy(eMatrix.getMatrix())).subtract(eMatrix);
         float[][] expected = {
                 {0.0f, 0.0f, 0.0f},
                 {0.0f, 0.0f, 0.0f},
@@ -412,9 +412,9 @@ class Matrix3Test {
 
     @Test
     void testGetEMulGetZ() {
-        Matrix3 eMatrix = Matrix3.getE();
-        Matrix3 zMatrix = Matrix3.getZ();
-        Matrix3 result = new Matrix3(deepCopy(eMatrix.getMatrix())).mul(zMatrix);
+        Matrix3f eMatrix = Matrix3f.getE();
+        Matrix3f zMatrix = Matrix3f.getZ();
+        Matrix3f result = new Matrix3f(deepCopy(eMatrix.getMatrix())).mul(zMatrix);
         float[][] expected = {
                 {0.0f, 0.0f, 0.0f},
                 {0.0f, 0.0f, 0.0f},
@@ -427,7 +427,7 @@ class Matrix3Test {
     @Test
     void testMethodChaining() {
         float[][] original = deepCopy(matrix1.getMatrix());
-        Matrix3 result = new Matrix3(deepCopy(original))
+        Matrix3f result = new Matrix3f(deepCopy(original))
                 .addInPlace(matrix2)
                 .subtract(matrix2)
                 .transpose()
@@ -442,15 +442,15 @@ class Matrix3Test {
 
     @Test
     void testAddInPlaceThenMul() {
-        Matrix3 sum = new Matrix3(deepCopy(matrix1.getMatrix())).addInPlace(matrix2);
-        Matrix3 result = new Matrix3(deepCopy(sum.getMatrix())).mul(identityMatrix);
+        Matrix3f sum = new Matrix3f(deepCopy(matrix1.getMatrix())).addInPlace(matrix2);
+        Matrix3f result = new Matrix3f(deepCopy(sum.getMatrix())).mul(identityMatrix);
         assertArrayEquals(sum.getMatrix(), result.getMatrix());
     }
 
     @Test
     void testMulThenTranspose() {
-        Matrix3 product = new Matrix3(deepCopy(matrix1.getMatrix())).mul(matrix2);
-        Matrix3 transposedProduct = new Matrix3(deepCopy(product.getMatrix())).transpose();
+        Matrix3f product = new Matrix3f(deepCopy(matrix1.getMatrix())).mul(matrix2);
+        Matrix3f transposedProduct = new Matrix3f(deepCopy(product.getMatrix())).transpose();
 
         // Проверяем размеры
         assertEquals(3, transposedProduct.getMatrix().length);
@@ -459,7 +459,7 @@ class Matrix3Test {
 
     @Test
     void testAddInPlaceMulChain() {
-        Matrix3 result = new Matrix3(deepCopy(matrix1.getMatrix()))
+        Matrix3f result = new Matrix3f(deepCopy(matrix1.getMatrix()))
                 .addInPlace(matrix2)
                 .mul(identityMatrix)
                 .transpose();
