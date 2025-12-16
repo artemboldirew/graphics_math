@@ -10,10 +10,15 @@ public class Matrix3 {
         this.matrix = initialMatrix;
     }
 
-    public Matrix3 multiply(Matrix3 mat) {
+    public Matrix3 mulInPlace(Matrix3 mat) {
         MathUtil.checkArray(mat.getMatrix(), n, m);
         this.matrix = MathUtil.multiplyMatrices(this.matrix, mat.matrix);
         return this;
+    }
+
+    public Matrix3 mul(Matrix3 mat) {
+        MathUtil.checkArray(mat.getMatrix(), n, m);
+        return new Matrix3(MathUtil.multiplyMatrices(getMatrix(), mat.getMatrix()));
     }
 
     public Matrix3 transpose() {
@@ -21,19 +26,24 @@ public class Matrix3 {
         return this;
     }
 
-    public Matrix3 multiply(Vector3 vec) {
+    public Matrix3 mul(Vector3 vec) {
         MathUtil.checkArray(vec.getVector(), 3, 1);
         this.matrix = MathUtil.multiplyMatrices(this.matrix, vec.getVector());
         return this;
     }
 
-    public Matrix3 add(Matrix3 mat) {
+    public Matrix3 addInPlace(Matrix3 mat) {
         MathUtil.checkArray(mat.getMatrix(), n, m);
         MathUtil.addArrays(this.matrix, mat.getMatrix());
         return this;
     }
 
-    public Matrix3 subtract(Matrix3 mat) {
+    public Matrix3 add(Matrix3 mat) {
+        MathUtil.checkArray(mat.getMatrix(), n, m);
+        return new Matrix3(MathUtil.addArrays(getMatrix(), mat.getMatrix()));
+    }
+
+    public Matrix3 subInPlace(Matrix3 mat) {
         MathUtil.checkArray(mat.getMatrix(), n, m);
         MathUtil.substractArrays(this.matrix, mat.getMatrix());
         return this;
