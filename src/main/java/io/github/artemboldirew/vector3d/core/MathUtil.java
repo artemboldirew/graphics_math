@@ -131,4 +131,186 @@ public class MathUtil {
             throw new IllegalArgumentException("Неправильные размеры матрицы");
         }
     }
+
+
+    public static float[] vectorAdd(float[] a, float[] b) {
+        float[] result = new float[a.length];
+        for (int i = 0; i < a.length; i++) {
+            result[i] = a[i] + b[i];
+        }
+        return result;
+    }
+
+    public static float[] vectorSubtract(float[] a, float[] b) {
+        float[] result = new float[a.length];
+        for (int i = 0; i < a.length; i++) {
+            result[i] = a[i] - b[i];
+        }
+        return result;
+    }
+
+    public static float[] vectorMultiplyByScalar(float[] vector, float scalar) {
+        float[] result = new float[vector.length];
+        for (int i = 0; i < vector.length; i++) {
+            result[i] = vector[i] * scalar;
+        }
+        return result;
+    }
+
+    public static float[] vectorDivideByScalar(float[] vector, float scalar) {
+        float[] result = new float[vector.length];
+        for (int i = 0; i < vector.length; i++) {
+            result[i] = vector[i] / scalar;
+        }
+        return result;
+    }
+
+    public static float[] vectorElementwiseMultiply(float[] a, float[] b) {
+        float[] result = new float[a.length];
+        for (int i = 0; i < a.length; i++) {
+            result[i] = a[i] * b[i];
+        }
+        return result;
+    }
+
+    public static float[] vectorElementwiseDivide(float[] a, float[] b) {
+        float[] result = new float[a.length];
+        for (int i = 0; i < a.length; i++) {
+            result[i] = a[i] / b[i];
+        }
+        return result;
+    }
+
+    public static float vectorDotProduct(float[] a, float[] b) {
+        float result = 0;
+        for (int i = 0; i < a.length; i++) {
+            result += a[i] * b[i];
+        }
+        return result;
+    }
+
+    public static float[] vectorAddInPlace(float[] target, float[] source) {
+        for (int i = 0; i < target.length; i++) {
+            target[i] += source[i];
+        }
+        return target;
+    }
+
+    public static float[] vectorSubtractInPlace(float[] target, float[] source) {
+        for (int i = 0; i < target.length; i++) {
+            target[i] -= source[i];
+        }
+        return target;
+    }
+
+    public static float[] vectorMultiplyByScalarInPlace(float[] vector, float scalar) {
+        for (int i = 0; i < vector.length; i++) {
+            vector[i] *= scalar;
+        }
+        return vector;
+    }
+
+    public static float[] vectorDivideByScalarInPlace(float[] vector, float scalar) {
+        for (int i = 0; i < vector.length; i++) {
+            vector[i] /= scalar;
+        }
+        return vector;
+    }
+
+    public static float[] vectorElementwiseMultiplyInPlace(float[] target, float[] source) {
+        for (int i = 0; i < target.length; i++) {
+            target[i] *= source[i];
+        }
+        return target;
+    }
+
+    public static float[] vectorElementwiseDivideInPlace(float[] target, float[] source) {
+        for (int i = 0; i < target.length; i++) {
+            target[i] /= source[i];
+        }
+        return target;
+    }
+
+
+    public static float vectorScalarProduct(float[] a, float[] b) {
+        float result = 0;
+        for (int i = 0; i < a.length; i++) {
+            result += a[i] * b[i];
+        }
+        return result;
+    }
+
+    public static float[] matrixMultiplyVector(float[][] matrix, float[] vector) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        float[] result = new float[rows];
+
+        for (int i = 0; i < rows; i++) {
+            float sum = 0;
+            for (int j = 0; j < cols; j++) {
+                sum += matrix[i][j] * vector[j];
+            }
+            result[i] = sum;
+        }
+
+        return result;
+    }
+
+
+    public static float[][] matrixDivideByScalar(float[][] matrix, float scalar) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        float[][] result = new float[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = matrix[i][j] / scalar;
+            }
+        }
+
+        return result;
+    }
+
+    public static float[][] matrixDivideByScalarInPlace(float[][] matrix, float scalar) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrix[i][j] /= scalar;
+            }
+        }
+
+        return matrix;
+    }
+
+    public static float[][] matrixMulByScalar(float[][] matrix, float scalar) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        float[][] result = new float[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = matrix[i][j] * scalar;
+            }
+        }
+
+        return result;
+    }
+
+    public static float[][] matrixMulByScalarInPlace(float[][] matrix, float scalar) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrix[i][j] *= scalar;
+            }
+        }
+
+        return matrix;
+    }
 }

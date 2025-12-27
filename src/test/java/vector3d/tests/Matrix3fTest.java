@@ -211,7 +211,7 @@ class Matrix3fTest {
                 {7.0f, 8.0f, 9.0f}
         };
 
-        float[][] vectorData = {{2.0f}, {0.0f}, {1.0f}};
+        float[] vectorData = {2.0f, 0.0f, 1.0f};
 
         Matrix3f matrix = new Matrix3f(matrixData);
         Vector3f vector = new Vector3f(vectorData);
@@ -222,9 +222,9 @@ class Matrix3fTest {
         // [4*2 + 5*0 + 6*1] = 8 + 0 + 6 = 14
         // [7*2 + 8*0 + 9*1] = 14 + 0 + 9 = 23
 
-        float[][] expected = {{5.0f}, {14.0f}, {23.0f}};
+        float[] expected = {5.0f, 14.0f, 23.0f};
 
-        assertFloatMatrixEquals(expected, result.getVector());
+        assertArrayEquals(expected, result.getVector());
     }
 
     @Test
@@ -235,14 +235,14 @@ class Matrix3fTest {
                 {7.0f, 8.0f, 9.0f}
         };
 
-        float[][] zeroVector = {{0.0f}, {0.0f}, {0.0f}};
+        float[] zeroVector = {0.0f, 0.0f, 0.0f};
 
         Matrix3f matrix = new Matrix3f(matrixData);
         Vector3f vector = new Vector3f(zeroVector);
         Vector3f result = matrix.mul(vector);
 
-        float[][] expected = {{0.0f}, {0.0f}, {0.0f}};
-        assertFloatMatrixEquals(expected, result.getVector());
+        float[] expected = {0.0f, 0.0f, 0.0f};
+        assertArrayEquals(expected, result.getVector());
     }
 
     @Test
@@ -253,15 +253,15 @@ class Matrix3fTest {
                 {0.0f, 0.0f, 1.0f}
         };
 
-        float[][] vectorData = {{2.0f}, {3.0f}, {4.0f}};
+        float[] vectorData = {2.0f, 3.0f, 4.0f};
 
         Matrix3f matrix = new Matrix3f(matrixData); // Единичная матрица
         Vector3f vector = new Vector3f(vectorData);
         Vector3f result = matrix.mul(vector);
 
         // Единичная матрица * вектор = тот же вектор
-        float[][] expected = vectorData;
-        assertFloatMatrixEquals(expected, result.getVector());
+        float[] expected = vectorData;
+        assertArrayEquals(expected, result.getVector());
     }
 
     // ==================== Сложение матриц ====================
@@ -656,7 +656,7 @@ class Matrix3fTest {
                 {0.0f, 0.0f, 3.0f}
         };
 
-        float[][] vectorData = {{1.0f}, {2.0f}, {3.0f}};
+        float[] vectorData = {1.0f, 2.0f, 3.0f};
 
         Matrix3f matrix = new Matrix3f(matrixData);
         Vector3f vector = new Vector3f(vectorData);
@@ -669,7 +669,7 @@ class Matrix3fTest {
 
         // Для диагональной матрицы транспонирование не меняет матрицу
         // Поэтому результаты должны быть одинаковыми
-        assertFloatMatrixEquals(result1.getVector(), result2.getVector());
+        assertArrayEquals(result1.getVector(), result2.getVector());
     }
 
     // ==================== Тесты на неизменяемость ====================

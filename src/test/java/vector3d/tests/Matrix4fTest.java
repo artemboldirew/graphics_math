@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class Matrix4fTest {
 
-    // ==================== Конструктор и setMatrix ====================
-
     private final float DELTA = 0.0001f;
     private void assertMatrixEquals(float[][] expected, float[][] actual, float delta) {
         assertNotNull(expected, "Ожидаемая матрица не должна быть null");
@@ -256,7 +254,7 @@ class Matrix4fTest {
                 {13.0f, 14.0f, 15.0f, 16.0f}
         };
 
-        float[][] vectorData = {{2.0f}, {0.0f}, {1.0f}, {3.0f}};
+        float[] vectorData = {2.0f, 0.0f, 1.0f, 3.0f};
 
         Matrix4f matrix = new Matrix4f(matrixData);
         Vector4f vector = new Vector4f(vectorData);
@@ -268,9 +266,9 @@ class Matrix4fTest {
         // [9*2 + 10*0 + 11*1 + 12*3] = 18 + 0 + 11 + 36 = 65
         // [13*2 + 14*0 + 15*1 + 16*3] = 26 + 0 + 15 + 48 = 89
 
-        float[][] expected = {{17.0f}, {41.0f}, {65.0f}, {89.0f}};
+        float[] expected = {17.0f, 41.0f, 65.0f, 89.0f};
 
-        assertFloatMatrixEquals(expected, result.getVector());
+        assertArrayEquals(expected, result.getVector());
     }
 
     @Test
@@ -282,14 +280,14 @@ class Matrix4fTest {
                 {13.0f, 14.0f, 15.0f, 16.0f}
         };
 
-        float[][] zeroVector = {{0.0f}, {0.0f}, {0.0f}, {0.0f}};
+        float[] zeroVector = {0.0f, 0.0f, 0.0f, 0.0f};
 
         Matrix4f matrix = new Matrix4f(matrixData);
         Vector4f vector = new Vector4f(zeroVector);
         Vector4f result = matrix.mul(vector);
 
-        float[][] expected = {{0.0f}, {0.0f}, {0.0f}, {0.0f}};
-        assertFloatMatrixEquals(expected, result.getVector());
+        float[] expected = {0.0f, 0.0f, 0.0f, 0.0f};
+        assertArrayEquals(expected, result.getVector());
     }
 
     // ==================== Сложение матриц ====================

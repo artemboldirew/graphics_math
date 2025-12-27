@@ -21,7 +21,7 @@ public class Matrix3f {
     }
 
     public Matrix3f mulInPlace(Matrix3f mat) {
-        setMatrix(MathUtil.multiplyMatrices(this.matrix, mat.matrix));
+        setMatrix(MathUtil.multiplyMatrices (this.matrix, mat.matrix));
         return this;
     }
 
@@ -30,7 +30,7 @@ public class Matrix3f {
     }
 
     public Vector3f mul(Vector3f mat) {
-        return new Vector3f(MathUtil.multiplyMatrices(this.matrix, mat.getVector()));
+        return new Vector3f(MathUtil.matrixMultiplyVector(this.matrix, mat.getVector()));
     }
 
     public Matrix3f addInPlace(Matrix3f mat) {
@@ -40,6 +40,22 @@ public class Matrix3f {
 
     public Matrix3f add(Matrix3f mat) {
         return new Matrix3f(MathUtil.addArrays(this.matrix, mat.matrix));
+    }
+
+    public Matrix3f div(float scalar) {
+        return new Matrix3f(MathUtil.matrixDivideByScalar(this.matrix, scalar));
+    }
+
+    public void divInPlace(float scalar) {
+        MathUtil.matrixDivideByScalarInPlace(this.matrix, scalar);
+    }
+
+    public Matrix3f mulScalar(float scalar) {
+        return new Matrix3f(MathUtil.matrixMulByScalar(this.matrix, scalar));
+    }
+
+    public void mulScalarInPlace(float scalar) {
+        MathUtil.matrixMulByScalarInPlace(this.matrix, scalar);
     }
 
     public Matrix3f subInPlace(Matrix3f mat) {

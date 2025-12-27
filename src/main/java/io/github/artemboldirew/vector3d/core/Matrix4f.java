@@ -30,7 +30,7 @@ public class Matrix4f {
     }
 
     public Vector4f mul(Vector4f mat) {
-        return new Vector4f(MathUtil.multiplyMatrices(this.matrix, mat.getVector()));
+        return new Vector4f(MathUtil.matrixMultiplyVector(this.matrix, mat.getVector()));
     }
 
     public Matrix4f addInPlace(Matrix4f mat) {
@@ -49,6 +49,22 @@ public class Matrix4f {
 
     public Matrix4f sub(Matrix4f mat) {
         return new Matrix4f(MathUtil.subArrays(this.matrix, mat.matrix));
+    }
+
+    public Matrix4f div(float scalar) {
+        return new Matrix4f(MathUtil.matrixDivideByScalar(this.matrix, scalar));
+    }
+
+    public void divInPlace(float scalar) {
+        MathUtil.matrixDivideByScalarInPlace(this.matrix, scalar);
+    }
+
+    public Matrix4f mulScalar(float scalar) {
+        return new Matrix4f(MathUtil.matrixMulByScalar(this.matrix, scalar));
+    }
+
+    public void mulScalarInPlace(float scalar) {
+        MathUtil.matrixMulByScalarInPlace(this.matrix, scalar);
     }
 
     public static Matrix4f getE() {
